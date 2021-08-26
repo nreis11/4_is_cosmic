@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="index.css" />
+
+    <title>4 is Cosmic</title>
+  </head>
+  <body>
+    <header>
+      <h1>4 is Cosmic!</h1>
+      <ol>
+        <li>Say a number</li>
+        <li>Determine how the subsequent numbers are calculated.</li>
+        <li>Repeat step 1 as necessary.</li>
+        <li>If requested, allow permission to use the microphone.</li>
+      </ol>
+    </header>
+    <!-- <form id="input-form">
+        <input id="num-input" type="text" placeholder="30, 45, 88, etc..."></input>
+        <button type="submit">Submit</button>
+    </form> -->
+    <div id="main">
+      <button id="start-btn">Start</button>
+      <p id="response"></p>
+    </div>
+    <footer>
+      <button id="answer-btn">Reveal Answer</button>
+      <p id="answer">
+        The next number is calculated by the length of the number provided in
+        word form. For example, the number 5 results in "five", which is a
+        length of 4. "four" ends the sequences.
+      </p>
+    </footer>
+
+    <script src="index.js"></script>
+  </body>
+</html>

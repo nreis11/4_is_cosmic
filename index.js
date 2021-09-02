@@ -36,8 +36,9 @@ function handleInput(input) {
       speakUtterance(msg);
       input = len.toString();
     }
-    response.innerHTML += `${input} is cosmic!`;
-    speakUtterance(`${input} is cosmic!`);
+    msg = `${input} is cosmic!`;
+    response.innerHTML += msg;
+    speakUtterance(msg);
   }
 }
 

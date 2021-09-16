@@ -10,8 +10,8 @@ window.SpeechRecognition =
 
 const recognition = new SpeechRecognition();
 const startBtn = document.getElementById("start-btn");
-const answerBtn = document.getElementById("answer-btn");
 const answer = document.getElementById("answer");
+const status = document.getElementById("status");
 const response = document.getElementById("response");
 
 function handleInput(input) {
@@ -20,13 +20,12 @@ function handleInput(input) {
   let word = "";
   let msg = "";
   let len;
+  response.innerHTML = "";
 
   if (isNaN(input) || input < 0) {
     msg = "That is not a valid number. Please provide a non-negative integer.";
     response.innerHTML = msg;
-    speakUtterance(msg);
   } else {
-    response.innerHTML = "";
     while (input !== "4") {
       word = helpers.num2word(input);
       console.log(word);
@@ -38,16 +37,20 @@ function handleInput(input) {
     }
     msg = `${input} is cosmic!`;
     response.innerHTML += msg;
-    speakUtterance(msg);
+  }
+  speakUtterance(msg, true);
+}
+
+function speakUtterance(msg, final = false) {
+  let utterance = new SpeechSynthesisUtterance(msg);
+  speechSynthesis.speak(utterance);
+  if (final) {
+    utterance.addEventListener("end", recognition.start.bind(recognition));
   }
 }
 
-function speakUtterance(msg) {
-  let utterance = new SpeechSynthesisUtterance(msg);
-  speechSynthesis.speak(utterance);
-}
-
 function parseSpeechResponse(e) {
+  recognition.abort();
   const transcript = Array.from(e.results)
     .map((result) => result[0])
     .map((result) => result.transcript)
@@ -61,14 +64,22 @@ function toggleAnswer() {
   answer.style.display = "block";
 }
 
+function showStatus(start = true) {
+  start
+    ? (status.style.visibility = "visible")
+    : (status.style.visibility = "hidden");
+}
+
 function main() {
   startBtn.disabled = true;
   recognition.start();
   recognition.addEventListener("result", parseSpeechResponse);
-  recognition.addEventListener("end", recognition.start);
+  // recognition.addEventListener("end", recognition.start);
 }
 
 // const form = document.getElementById("input-form");
 // form.addEventListener("submit", submitForm);
 startBtn.addEventListener("click", main);
-answerBtn.addEventListener("click", toggleAnswer);
+answer.addEventListener("click", toggleAnswer);
+recognition.addEventListener("start", () => showStatus());
+recognition.addEventListener("end", () => showStatus(false));
